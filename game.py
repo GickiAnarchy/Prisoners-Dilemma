@@ -36,12 +36,14 @@ class TheGame():
     if self.player_1 == None or self.player_2 == None:
       print("player(s) missing.")
     while True:
-      for i in range(rounds):
-        a = self.player_1.get_decision()
-        b = self.player_2.get_decision()
-        if a == "C":
-          b.take_L()
-        if b == "C":
-          a.take_L()
+      a = self.player_1.get_decision()
+      b = self.player_2.get_decision()
+      if a == "C":
+        self.player_2.take_L()
+      if b == "C":
+        self.player_1.take_L()
+      print(f"#####\n#1#2#\n#{a}#{b}#")
+      if self.player_1.count_turns() <= 0 or self.player_2.count_turns() <= 0:
+        break
         
         

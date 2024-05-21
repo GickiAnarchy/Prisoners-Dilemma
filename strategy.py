@@ -49,7 +49,7 @@ class Strategy:
 
   def retaliate(self):
     pass
-t55
+
 
 
 
