@@ -36,6 +36,8 @@ class TheGame():
     if self.player_1 == None or self.player_2 == None:
       print("player(s) missing.")
       return
+    self.player_1.save_strategy()
+    self.player_2.save_strategy()
     while True:
       a = self.player_1.get_decision()
       b = self.player_2.get_decision()

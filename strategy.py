@@ -59,22 +59,27 @@ class Strategy:
     #print(f"{str(self.points)}")
     return self.points
 
-
-
-
-
-def save_strategy(st):
-  r = load_strategy()
-  if st in r:
-    return
-    with open("strats",'wb') as file:
-      pickle.dump(r,file)
+  def save_strategy(self):
+    try:
+      r = self.load_strategy()
+      if self in r:
+          return
+      r.append(self)
+      with open("strats", 'wb') as file:
+        pickle.dump(r, file)
       print("Saved")
-      return
+    except FileNotFoundError:
+      with open("strats", 'wb') as file:
+        pickle.dump([self], file)
+      print("Saved")
 
-def load_strategy():
-    r = []
-    with open("strats",'rb') as file:
+  def load_strategy(self):
+    try:
+      with open("strats", 'rb') as file:
         r = pickle.load(file)
-        print("Loaded")
-        return r
+      print("Loaded")
+      for u in r:
+        print(f"{u.name}")
+      return r
+    except FileNotFoundError:
+      return []
