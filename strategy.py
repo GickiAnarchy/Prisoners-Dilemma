@@ -11,6 +11,7 @@ class Strategy:
     self.name = name
     self.tolerance = tol
     self.plan = plan
+    self.points = 0
 
   def count_turns(self):
     return len(self.plan)
@@ -49,6 +50,14 @@ class Strategy:
 
   def retaliate(self):
     pass
+  
+  def add_points(self, p:int):
+    self.points += p
+    return
+  
+  def get_points(self):
+    #print(f"{str(self.points)}")
+    return self.points
 
 
 

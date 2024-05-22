@@ -35,6 +35,7 @@ class TheGame():
   def play(self):
     if self.player_1 == None or self.player_2 == None:
       print("player(s) missing.")
+      return
     while True:
       a = self.player_1.get_decision()
       b = self.player_2.get_decision()
@@ -43,7 +44,13 @@ class TheGame():
       if b == "C":
         self.player_1.take_L()
       print(f"#####\n#1#2#\n#{a}#{b}#")
-      if self.player_1.count_turns() <= 0 or self.player_2.count_turns() <= 0:
+      self.player_1.add_points(self.play_matrix[(a,b)][0])
+      self.player_2.add_points(self.play_matrix[(a,b)][1])
+      if self.player_2.count_turns() <= 0:
         break
+      
+    print("FINAL SCORE")
+    print(f"Player 1 : {str(self.player_1.get_points())}")
+    print(f"Player 2 : {str(self.player_2.get_points())}")
         
         
