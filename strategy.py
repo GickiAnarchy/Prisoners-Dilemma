@@ -29,15 +29,16 @@ class Strategy:
       print("decision added")
 
   def make_plan_manual(self):
-    print(f"Enter decision #{i}:")
-    while True:
-      try:
-        inp = str(input("...")).capitalize()
-        if inp in ["S", "C"]:
-          self.plan[i] = inp
-          break
-      except ValueError as e:
-        print(e)
+    for i in range(10):
+      print(f"Enter decision #{i}:")
+      while True:
+        try:
+          inp = str(input("...")).capitalize()
+          if inp in ["S", "C"]:
+            self.plan.append(inp)
+            break
+        except ValueError as e:
+          print(e)
 
   def take_L(self):
     self.tolerance = max(0, self.tolerance - 1)
@@ -62,8 +63,12 @@ class Strategy:
   def save_strategy(self):
     try:
       r = self.load_strategy()
-      if self in r:
-          return
+      r_names = []
+      for i in r:
+        r_names.append(i.name)
+      if self.name in r_names:
+        print(f"{self.name} already exists")
+        return
       r.append(self)
       with open("strats", 'wb') as file:
         pickle.dump(r, file)

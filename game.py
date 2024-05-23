@@ -11,7 +11,7 @@
 
 import strategy
 import plans
-
+import pickle
 
 class TheGame():
   def __init__(self, p1 = None, p2 = None, rounds = 10):
@@ -31,6 +31,19 @@ class TheGame():
     if self.player_2 == None:
       self.player_2 = p2
       print(f"{self.player_2.name} is player 2.")
+
+  def create_player(self):
+    n = input("Name this strategy: ")
+    try:
+      t = int(input("Enter the tolerance (1-10): "))
+    except:
+      t = 1
+      print("Must be a number 1-10. Set to 1.")
+    s = strategy.Strategy(n,t)
+    s.make_plan_manual()
+    s.save_strategy()
+    return s
+    
 
   def play(self):
     if self.player_1 == None or self.player_2 == None:
@@ -54,5 +67,3 @@ class TheGame():
     print("FINAL SCORE")
     print(f"Player 1 : {str(self.player_1.get_points())}")
     print(f"Player 2 : {str(self.player_2.get_points())}")
-        
-        
