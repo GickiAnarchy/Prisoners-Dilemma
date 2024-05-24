@@ -5,6 +5,8 @@
 
 import random
 import pickle
+import tabulate
+
 
 class Strategy:
   def __init__(self, name: str, tol: int, plan: list[str] = []):
@@ -12,6 +14,13 @@ class Strategy:
     self.tolerance = tol
     self.plan = plan
     self.points = 0
+
+  def get_dict(self):
+    d = {"Name":self.name,
+        "Tolerance":self.tolerance,
+        "Plan":self.plan}
+    return d
+    
 
   def count_turns(self):
     return len(self.plan)

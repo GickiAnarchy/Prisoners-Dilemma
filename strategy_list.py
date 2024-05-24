@@ -1,15 +1,30 @@
 import game
 import strategy
 import pickle
+import subprocess
+from tabulate import tabulate
 
-class Strategies():
+
+class Strategy_CLI():
   def __init__(self):
     self.s_list = self.load_strategy()
-  
+    self.title = subprocess.run("figlet -c -t \'PRISONERS DILEMMA\'", shell=True, capture_output=True, text=True)
   
   def show_cli(self):
-    pass
-  
+    while True:
+      subprocess.run("clear")
+      print(self.title.stdout)
+      self.s_list = self.load_strategy()
+      strat_names = []
+      complete_list = []
+      for i in self.s_list:
+        strat_names.append(i.name)
+        complete_list.append(i.get_dict())
+      print(tabulate(complete_list,headers="keys",tablefmt="grid"))
+      print("Enter a name for Prisoner options.\n\nEnter \"+\" to add a prisoner.")
+      selection = input("::::")
+
+
   def save_strategy(self, strat):
     try:
       r = self.load_strategy()
@@ -37,6 +52,7 @@ class Strategies():
       print("Loaded")
       return r
     except FileNotFoundError:
+      print("File not found while loading")
       return []
 
   def reset_save_file(self):
