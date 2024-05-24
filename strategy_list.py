@@ -18,11 +18,17 @@ class Strategy_CLI():
       strat_names = []
       complete_list = []
       for i in self.s_list:
-        strat_names.append(i.name)
+        strat_names.append(i.name.lower())
         complete_list.append(i.get_dict())
       print(tabulate(complete_list,headers="keys",tablefmt="grid"))
-      print("Enter a name for Prisoner options.\n\nEnter \"+\" to add a prisoner.")
+      print("Enter a name for Prisoner options.\n\n\t\"+\" = add prisoner\n\t\"x\" = Exit")
       selection = input("::::")
+      match selection.lower():
+        case strat_names:
+          for p in self.s_list:
+            if p.name.lower() == selection.lower():
+          
+          
 
 
   def save_strategy(self, strat):
