@@ -1,6 +1,7 @@
 import game
 import strategy
 import pickle
+import sys
 import subprocess
 from tabulate import tabulate
 
@@ -24,22 +25,34 @@ class Strategy_CLI():
       print("Enter a name for Prisoner options.\n\n\t\"+\" = add prisoner\n\t\"x\" = Exit")
       selection = input("::::")
       match selection.lower():
-        case strat_names:
-          for p in self.s_list:
-            if p.name.lower() == selection.lower():
-          
-          
+        case "x":
+          sys.exit()
+        case "+":
+          self.create_player()
 
+
+  def create_player(self):
+    n = input("Name this strategy: ")
+    try:
+      t = int(input("Enter the tolerance (1-10): "))
+    except:
+      t = 1
+      print("Must be a number 1-10. Set to 1.")
+    s = strategy.Strategy(n,t)
+    s.make_plan_manual()
+    self.save_strategy(s)
+    return
 
   def save_strategy(self, strat):
     try:
       r = self.load_strategy()
-      r_names = []
+      print(type(r))
+      #r_names = []
       for i in r:
-        r_names.append(i.name)
-      if strat.name in r_names:
-        print(f"{strat.name} already exists")
-        return
+        #r_names.append(i.name.lower())
+        if strat.name.lower() == i.name.lower():
+          print(f"{strat.name} already exists")
+          return
       r.append(strat)
       with open("strats", 'wb') as file:
         pickle.dump(r, file)
