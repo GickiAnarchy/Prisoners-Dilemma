@@ -8,7 +8,6 @@
 """
 
 import strategy
-import plans
 import pickle
 
 

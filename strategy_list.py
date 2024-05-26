@@ -34,13 +34,16 @@ class Strategy_CLI:
                     sys.exit()
                 case "+":
                     self.create_player()
-                case _ if selection in strat_names:
+                case _ if selection.lower() in strat_names:
                     self.select_strategy(selection)
                 case _:
                     print("Invalid input. Please try again.")
 
     def create_player(self):
         n = input("Name this strategy: ")
+        if any(s.name.lower() == n.lower() for s in self.s_list):
+                print(f"{n} already exists")
+                return
         try:
             t = int(input("Enter the tolerance (1-10): "))
             if t < 1 or t > 10:
@@ -55,9 +58,6 @@ class Strategy_CLI:
     def save_strategy(self, strat):
         try:
             r = self.load_strategy()
-            if any(s.name.lower() == strat.name.lower() for s in r):
-                print(f"{strat.name} already exists")
-                return
             r.append(strat)
             with open("strats", "wb") as file:
                 pickle.dump(r, file)
@@ -87,8 +87,22 @@ class Strategy_CLI:
                     [selected_strat[0].get_dict()], headers="keys", tablefmt="grid"
                 )
             )
+            ed = input("What to do?\n\td = Delete\n\tn = Edit Name\n\tp = Edit plan\n\tt = Edit Tolerance\n\tc = Cancel")
+            match ed:
+              case "c":
+                return
+              case "d":
+                self.delete_strat(selected_strat[0])
         else:
             print("Strategy not found")
+
+    def delete_strat(self,dying_strat):
+      for s in self.s_list:
+        if s.name.lower() == dying_strat.name.lower():
+          self.s_list.remove(s)
+        with open("strats", "wb") as file:
+                pickle.dump(self.s_list, file)
+      return
 
 
 # if __name__ == "__main__":
